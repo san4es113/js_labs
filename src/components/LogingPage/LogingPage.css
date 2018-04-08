@@ -1,8 +1,13 @@
 .LogingPage{
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 0.9s all;
 }
 .LogingPage form{
     display: flex;
@@ -39,4 +44,7 @@
     margin-bottom: 5px;
     margin-top: 10px;
     color: #da2f2f;
+}
+.hide{
+    left:-1000px;
 }

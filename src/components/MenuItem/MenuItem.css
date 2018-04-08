@@ -1,0 +1,28 @@
+.MenuItem{
+  padding: 15px;
+  background: rgb(92, 9, 9);
+  color: white;
+  font-size: 25px;
+  padding-left: 50px;
+  cursor: pointer;
+  position: relative;
+}
+.MenuItem:hover{
+  background: darkgoldenrod;
+  padding: 25px 0;
+}
+.active::after{
+  content: '';
+  width: 65px;
+  height: 65px;
+  background: darkgoldenrod;
+  position: absolute;
+  top: 7px;
+  left: 164px;
+  transform: rotateZ(45deg);
+  z-index: 2;
+}
+.MenuItem.active{
+  padding: 25px 0;
+  background: darkgoldenrod;
+}

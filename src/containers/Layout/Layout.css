@@ -1,0 +1,15 @@
+.Layout{
+  display: flex;
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+}
+.Layout .content{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+.Layout aside{
+  min-width: 200px;
+}

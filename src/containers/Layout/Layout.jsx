@@ -10,7 +10,7 @@ class Layout extends Component{
         {name: 'Devices'},
         {name: 'Map'}
       ],
-      activeMenuItem: ''
+      activeMenuItem: 'Devices'
     }
   }
   onMenuItemClick = name => {

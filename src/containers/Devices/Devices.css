@@ -1,0 +1,15 @@
+.Devices{
+  width: 100%;
+  padding: 0 2%;
+}
+.Devices ul li:nth-child(2n){
+  background:rgba(237, 239, 239, 0.55);
+}
+.Devices ul li:nth-child(2n+1){
+  background: rgba(209, 199, 212, 0.61);
+}
+.table-header{
+  background: #66339991!important;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+}

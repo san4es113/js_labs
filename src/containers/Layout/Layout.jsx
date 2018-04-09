@@ -7,8 +7,14 @@ class Layout extends Component{
     super(props);
     this.state = {
       menuItems:[
-        {name: 'Devices'},
-        {name: 'Map'}
+        {
+          name: 'Devices',
+          path: '/devices'
+        },
+        {
+          name: 'Map',
+          path: '/device-map'
+        }
       ],
       activeMenuItem: 'Devices'
     }
@@ -28,7 +34,8 @@ class Layout extends Component{
               return <li>
                 <MenuItem 
                   key = {item.name}
-                  name = {item.name} 
+                  name = {item.name}
+                  path = {item.path}
                   isActive = {item.name === this.state.activeMenuItem}
                   clicked = {() => this.onMenuItemClick(item.name)} 
                   />

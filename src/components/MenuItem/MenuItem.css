@@ -3,26 +3,29 @@
   background: rgb(92, 9, 9);
   color: white;
   font-size: 25px;
-  padding-left: 50px;
+  padding-left: 20px;
   cursor: pointer;
   position: relative;
 }
 .MenuItem:hover{
   background: darkgoldenrod;
-  padding: 25px 0;
+  padding: 25px 0 25px 20px;
 }
 .active::after{
   content: '';
-  width: 65px;
-  height: 65px;
+  width: 40px;
+  height: 40px;
   background: darkgoldenrod;
   position: absolute;
-  top: 7px;
-  left: 164px;
+  top: 18px;
+  left: 174px;
   transform: rotateZ(45deg);
   z-index: 2;
+  border-radius: 10px;
+
 }
 .MenuItem.active{
   padding: 25px 0;
   background: darkgoldenrod;
+  padding-left: 20px;
 }

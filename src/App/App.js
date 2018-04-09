@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
-import StartPage from '../containers/StartPage/StartPage';
 import Layout from '../containers/Layout/Layout';
-import Devices from '../containers/Devices/Devices';
+import {BrowserRouter} from 'react-router-dom';
+import { getRoutes } from './app-routes';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      isUserAuth: true
+    }
+  }
   render() {
     return (
-      <div className="App">
-        {/* <StartPage/> */}
+      <BrowserRouter>
         <Layout>
-          <Devices/>
+          {getRoutes(this.state.isUserAuth)}
         </Layout>
-      </div>
+      </BrowserRouter>
     );
   }
 }

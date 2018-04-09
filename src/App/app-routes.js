@@ -5,12 +5,12 @@ import Devices from '../containers/Devices/Devices';
 import StartPage from '../containers/StartPage/StartPage';
 import DeviceMap from '../containers/Map/DeviceMap';
 
-export const getRoutes = isUserAuth => {
-  if(!isUserAuth){
+export const getRoutes = isUserPresent => {
+  if(!isUserPresent){
     return (
       <Switch>
-        <Route path="/" exact component={StartPage}/>
-        <Redirect to="/" />
+        <Route path = "/" exact render = {() => <StartPage show = {true}/> } />
+        <Redirect to = "/"/> 
       </Switch>
     );
   } else {

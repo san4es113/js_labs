@@ -9,7 +9,6 @@
 }
 .MenuItem:hover{
   background: darkgoldenrod;
-  padding: 25px 0 25px 20px;
 }
 .active::after{
   content: '';
@@ -17,15 +16,13 @@
   height: 40px;
   background: darkgoldenrod;
   position: absolute;
-  top: 18px;
-  left: 174px;
+  top: 7px;
+  left: 171px;
   transform: rotateZ(45deg);
   z-index: 2;
   border-radius: 10px;
-
+  
 }
 .MenuItem.active{
-  padding: 25px 0;
   background: darkgoldenrod;
-  padding-left: 20px;
 }

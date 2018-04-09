@@ -29,10 +29,9 @@ class Devices extends Component{
             />
           </li>
           {this.props.deviceList.map((device, index) => {
-            return <li> 
+            return <li key = {device.id}> 
               <DeviceItem
-                key = {device.id}
-                id = {index+1}
+                id = {index + 1}
                 item = {device}
               />
               </li>

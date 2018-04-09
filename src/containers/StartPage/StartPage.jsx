@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import LogingPage from '../../components/LogingPage/LogingPage';
+import { login } from '../../store/actions/auth';
+import { connect } from 'react-redux';
 
 class StartPage extends Component{
     constructor(props){
@@ -22,8 +24,9 @@ class StartPage extends Component{
     onSubmitData = (e) => {
         // make ajax to server
         e.preventDefault();
-        alert(`email:${this.userData.email}, password:${this.userData.password}`);
+        this.props.login(this.userData.email);
         this.setState({showPage: false});
+        this.userData = {};
     }
 
     render(){
@@ -40,4 +43,9 @@ class StartPage extends Component{
    
     }
 }
-export default StartPage;
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (email) => dispatch(login(email,'asfsdfsfgsdgddfkjaslfnsaasdlkfjasdp;gkansdlsadfasgasasg'))
+  }
+}
+export default connect(null, mapDispatchToProps)(StartPage);

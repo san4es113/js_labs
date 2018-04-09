@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
+import { connect } from 'react-redux';
 import './Layout.css';
 import MenuItem from '../../components/MenuItem/MenuItem';
+import { logout } from '../../store/actions/auth';
 
 class Layout extends Component{
   constructor(props){
@@ -28,24 +30,35 @@ class Layout extends Component{
   render(){
     return (
       <div className="Layout">
-        <aside>
-          <ul>
-            {this.state.menuItems.map( item => {
-              return <li>
-                <MenuItem 
-                  key = {item.name}
-                  name = {item.name}
-                  path = {item.path}
-                  isActive = {item.name === this.state.activeMenuItem}
-                  clicked = {() => this.onMenuItemClick(item.name)} 
+        <header>
+          <button onClick={this.props.logout}>Log out</button>
+        </header>
+        <div className = "header-bottom">
+          <aside>
+            <ul>
+              {this.state.menuItems.map(item => {
+                return <li key = {item.name}>
+                  <MenuItem
+                    name = {item.name}
+                    path = {item.path}
+                    isActive = {item.name === this.state.activeMenuItem}
+                    clicked = {() => this.onMenuItemClick(item.name)} 
                   />
-              </li>
-            })}
-          </ul>
-        </aside>
+                </li>
+              })}
+            </ul>
+          </aside>
         <div className="content">{this.props.children}</div>
+        </div>
       </div>
     );
   }
 }
-export default Layout;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(logout())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Layout);

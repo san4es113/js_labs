@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './App.css';
 import Layout from '../containers/Layout/Layout';
-import {BrowserRouter} from 'react-router-dom';
 import { getRoutes } from './app-routes';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      isUserAuth: true
-    }
-  }
   render() {
     return (
       <BrowserRouter>
         <Layout>
-          {getRoutes(this.state.isUserAuth)}
+          {getRoutes(this.props.isUserPresent)}
         </Layout>
       </BrowserRouter>
     );
   }
 }
-
-export default App;
+const mapStateToProps = state => {
+  return {
+    isUserPresent: state.auth.isUserPresent,
+  }
+}
+export default connect(mapStateToProps)(App);

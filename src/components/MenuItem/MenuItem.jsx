@@ -8,10 +8,8 @@ const menuItem = props => (
       className = {"MenuItem" + (props.isActive? ' active' : '')}
       onClick = {props.clicked}
       >
-      
       {props.name}
-     
     </div>
-    </Link>
+  </Link>
 );
 export default menuItem;

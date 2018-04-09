@@ -1,54 +1,12 @@
 import React,{Component} from 'react';
+import { connect } from 'react-redux';
 import './Devices.css';
 import DeviceItem from '../../components/DeviceItem/DeviceItem';
 
 class Devices extends Component{
   constructor(props){
     super(props);
-    this.state = {
-      deviceList: [
-        {
-          id: '12',
-          model:'Nokia',
-          battery: '67%',
-          signal: '-100dBm',
-          locationLng: '12.431',
-          locationLat: '23.542'
-        },
-        {
-          id: '13',
-          model:'Nokia',
-          battery: '67%',
-          signal: '-100dBm',
-          locationLng: '12.431',
-          locationLat: '23.542'
-        },
-        {
-          id: '14',
-          model:'Nokia',
-          battery: '67%',
-          signal: '-100dBm',
-          locationLng: '12.431',
-          locationLat: '23.542'
-        },
-        {
-          id: '15',
-          model:'Nokia',
-          battery: '67%',
-          signal: '-100dBm',
-          locationLng: '12.431',
-          locationLat: '23.542'
-        },
-        {
-          id: '16asdawrgdsaaafawraeyhsgfawgedtjsdgsrhfh',
-          model:'Nokia',
-          battery: '67%',
-          signal: '-100dBm',
-          locationLng: '12.431',
-          locationLat: '23.542'
-        }
-      ]
-    }
+    this.state = {}
   }
 
   render(){
@@ -70,7 +28,7 @@ class Devices extends Component{
               item = {header}  
             />
           </li>
-          {this.state.deviceList.map((device, index) => {
+          {this.props.deviceList.map((device, index) => {
             return <li> 
               <DeviceItem
                 key = {device.id}
@@ -84,4 +42,9 @@ class Devices extends Component{
     );
   }
 }
-export default Devices;
+const mapStateToProps = state => {
+  return {
+    deviceList: state.devices.deviceList
+  }
+}
+export default connect(mapStateToProps)(Devices);

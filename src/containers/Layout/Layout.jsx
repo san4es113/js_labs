@@ -31,7 +31,8 @@ class Layout extends Component{
     return (
       <div className="Layout">
         <header>
-          <button onClick={this.props.logout}>Log out</button>
+          <img src="" style={{width:'40px',height:'40px'}}/>
+          <button onClick={this.props.logout} className = "logout-btn">Log out</button>
         </header>
         <div className = "header-bottom">
           <aside>

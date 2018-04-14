@@ -1,0 +1,37 @@
+.TableHeader{
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  background: rgb(167, 130, 197);
+  border-radius: 10px 10px 0 0;
+  align-items: center;
+  padding: 5px;
+}
+.TableHeader .cell:first-child{
+  width: 20px;
+  padding: 0;
+  margin: 0;
+  min-width: 15px;
+}
+.dropdown-item{
+  display: block;
+  margin: 2px;
+  font-size: 16px;
+  margin: 5px;
+  padding: 10px 0;
+}
+.dropdown-item:hover{
+  background-color: rgba(239, 230, 230, 0.44);
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.btn-default{
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  background: transparent;
+  border: none;
+  width:100%;
+  font-size: 20px;
+}

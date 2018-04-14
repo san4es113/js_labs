@@ -2,26 +2,14 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Devices from '../containers/Devices/Devices';
-import StartPage from '../containers/StartPage/StartPage';
 import DeviceMap from '../containers/Map/DeviceMap';
 
-export const getRoutes = isUserPresent => {
-  if(!isUserPresent){
-    return (
-      <Switch>
-        <Route path = "/" exact render = {() => <StartPage show = {true}/> } />
-        <Redirect to = "/"/> 
-      </Switch>
-    );
-  } else {
-    return (
+export const routes = (
       <Switch>
         <Route path="/devices" exact component = {Devices}/>
         <Route path="/device-map" exact component = {DeviceMap}/>
-        <Redirect to="/devices" />
+        <Route path="/devices/:id" exact component = {Devices}/>
       </Switch>
-    );
-  }
-}
+);
 
 

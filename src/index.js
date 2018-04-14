@@ -4,7 +4,8 @@ import { Provider } from 'react-redux'
 import './index.css';
 import App from './App/App';
 import registerServiceWorker from './registerServiceWorker';
-import { store } from './store/store'; 
+import { store } from './store/store';
+
 ReactDOM.render(
   <Provider store = {store}>
     <App />

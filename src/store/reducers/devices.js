@@ -2,44 +2,37 @@ const initialState = {
   deviceList:[
     {
       id: '12',
-      model:'Nokia',
-      battery: '67%',
-      signal: '-100dBm',
-      locationLng: '12.431',
-      locationLat: '23.542'
+      type: 'Android',
+      status: 'Connected',
+      lastSync: 'five days ago',
+      details: {
+        name: 'View details',
+        path: '/devices/Android14',
+        type: 'link'
+      } 
     },
     {
-      id: '13',
-      model:'Nokia',
-      battery: '67%',
-      signal: '-100dBm',
-      locationLng: '12.431',
-      locationLat: '23.542'
+      id: '12',
+      type: 'Android',
+      status: 'Connected',
+      lastSync: 'five days ago',
+      details: {
+        name: 'View details',
+        path: '/devices/Android13',
+        type: 'link'
+      } 
     },
     {
-      id: '14',
-      model:'Nokia',
-      battery: '67%',
-      signal: '-100dBm',
-      locationLng: '12.431',
-      locationLat: '23.542'
+      id: '12',
+      type: 'Android',
+      status: 'Connected',
+      lastSync: 'five days ago',
+      details: {
+        name: 'View details',
+        path: '/devices/Android15',
+        type: 'link'
+      } 
     },
-    {
-      id: '15',
-      model:'Nokia',
-      battery: '67%',
-      signal: '-100dBm',
-      locationLng: '12.431',
-      locationLat: '23.542'
-    },
-    {
-      id: '16asdawrgdsaaafawraeyhsgfawgedtjsdgsrhfh',
-      model:'Nokia',
-      battery: '67%',
-      signal: '-100dBm',
-      locationLng: '12.431',
-      locationLat: '23.542'
-    }
   ]
 }
 

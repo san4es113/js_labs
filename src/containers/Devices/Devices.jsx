@@ -1,36 +1,31 @@
 import React,{Component} from 'react';
 import { connect } from 'react-redux';
 import './Devices.css';
-import DeviceItem from '../../components/DeviceItem/DeviceItem';
+import TableItem from '../../components/TableItem/Table';
 
 class Devices extends Component{
-  constructor(props){
-    super(props);
-    this.state = {}
-  }
 
   render(){
     const header = {
-      id: 'device id',
-      model:'model',
-      battery: 'battery level',
-      signal: 'signal level',
-      locationLng: 'longitude',
-      locationLat: 'latitude'
+      id: 'Device ID',
+      type: 'Device Type',
+      status: 'Status',
+      lastSync: 'Last Sycn Time',
+      details: 'View details'
     }
     return (
       <div className = "Devices">
         <h2>List of devices:</h2>
         <ul>
           <li className = "table-header">
-            <DeviceItem 
+            <TableItem 
               id = '№'
               item = {header}  
             />
           </li>
           {this.props.deviceList.map((device, index) => {
             return <li key = {device.id}> 
-              <DeviceItem
+              <TableItem
                 id = {index + 1}
                 item = {device}
               />

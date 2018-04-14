@@ -1,32 +1,63 @@
 import React,{ Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import './Devices.css';
 import TableItem from '../../components/TableItem/Table';
 import TableHeader from '../../components/TableHeader/TableHeader';
+import { displayByType, displayByStatus, displayByLastSync } from '../../service/devices';
 
 class Devices extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      devices: this.props.deviceList
+    }
+  }
 
   onDeviceTypeItemClickHandler = (name) => {
-    alert(name);
+    if(name === 'all') {
+      this.setState({ devices: this.props.deviceList});
+    } else {
+      const devices = displayByType(this.props.deviceList, name.toLowerCase())
+      this.setState({devices});
+    }
   }
+
   onDeviceStatusItemClickHandler = (name) => {
-    alert(name);
+    if(name === 'all'){
+      this.setState({ devices: this.props.deviceList});
+    } else {
+      const devices = displayByStatus(this.props.deviceList, name.toLowerCase())
+      this.setState({devices});
+    }
   }
+
   onDeviceLastSyncItemClickHandler = (name) => {
-    alert(name);
+    let lastTime;
+    if(name.toLowerCase() === 'last hour' ){
+      lastTime = moment().subtract('1','hour').valueOf();
+    } else if( name.toLowerCase() === 'last week' ) {
+      lastTime = moment().subtract('7','days').valueOf();
+    } else {
+      const hours = name.split(' ')[1];
+      lastTime = moment().subtract(hours, 'hour').valueOf();
+    }
+    const devices = displayByLastSync(this.props.deviceList, lastTime)
+    this.setState({devices});
   }
+
   render(){
     const header = {
       number: '№',
       id: 'Device ID',
       type: {
        name: 'Device Type',
-       items: ['Android'],
+       items: ['Android','all'],
        click: this.onDeviceTypeItemClickHandler
       },
       status: {
         name: 'Status',
-        items: ['connected', 'disconnectd', 'all'],
+        items: ['connected', 'disconnected', 'all'],
         click: this.onDeviceStatusItemClickHandler
        },
       lastSync: {
@@ -44,7 +75,7 @@ class Devices extends Component{
           <li className = "table-header">
           <TableHeader item = {header}/>
           </li>
-          {this.props.deviceList.map((device, index) => {
+          {this.state.devices.map((device, index) => {
             return <li key = {device.id}> 
               <TableItem
                 id = {index + 1}
@@ -57,6 +88,7 @@ class Devices extends Component{
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     deviceList: state.devices.deviceList

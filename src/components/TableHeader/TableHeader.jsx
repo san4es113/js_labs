@@ -9,17 +9,17 @@ const tableHeader=(props)=>{
       {Object.keys(props.item || {}).map(it=>{
         const header = props.item[it];
         if(typeof header !== 'object') {
-          return <div className="cell">{header}</div>
+          return <div key={it} className="cell">{header}</div>
         }
         return (
-          <div className="btn-group" style={{width: 100 / cellCount + '%' }}>
+          <div key={it} className="btn-group" style={{width: 100 / cellCount + '%' }}>
           <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {header.name}
           </button>
           <div className="dropdown-menu">
             {
-              header.items.map(it => {
-                return <a className="dropdown-item" onClick = {() => header.click(it) } >{it}</a>
+              header.items.map(e => {
+                return <a key={e} className="dropdown-item" onClick = {() => header.click(e) } >{e}</a>
               })
             }
           </div>

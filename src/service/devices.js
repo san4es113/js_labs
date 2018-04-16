@@ -1,4 +1,4 @@
-export const displayByType = (arr, type) => arr.filter( device => device.type === type);
+export const displayByType = (arr, type) => arr.filter( device => device.type.toLowerCase() === type);
 
 export const displayByStatus = (arr, status) => arr.filter( device => device.status === status);
 

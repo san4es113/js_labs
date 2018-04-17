@@ -22,30 +22,3 @@
 	</div>
 
 </body> 
-
-
-
-
-<style>
-	a{
-		text-decoration:none;
-	}
-	.template {
-		color:white;
-		font-size:12px;
-	}
-	body{
-		background-color:orange;
-		height:1000px;
-	}
-	.description{
-		background-color:#333333;
-		margin-left:5%;
-		width:90%;
-		height:80%;
-	}
-	.item{
-		color:white;
-		text-align:center;
-	}
-</style>

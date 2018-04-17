@@ -29,6 +29,7 @@ class DeviceMap extends Component{
   componentDidMount(){
     this.map = new GoogleMap('map1',[]);
     const that = this;
+    that.showDevicesOnMap();
     setInterval(() => {//draw objects
       that.map.clearMap();
       that.showDevicesOnMap();

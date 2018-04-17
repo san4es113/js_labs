@@ -6,7 +6,7 @@ import DeviceMap from '../containers/Map/DeviceMap';
 
 export const routes = (
       <Switch>
-        <Route path="/devices" exact component = {Devices}/>
+        <Route path="/devices"  component = {Devices}/>
         <Route path="/device-map" exact component = {DeviceMap}/>
         <Route path="/devices/:id" exact component = {Devices}/>
       </Switch>

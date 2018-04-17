@@ -1,6 +1,7 @@
 import React,{ Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import './Devices.css';
 import TableItem from '../../components/TableItem/Table';
 import TableHeader from '../../components/TableHeader/TableHeader';
@@ -87,6 +88,7 @@ class Devices extends Component{
     }
     return (
       <div className = "Devices">
+        <Link to="device-map">Go To Map</Link>
         <h2>List of devices:</h2>
         
         <ul>

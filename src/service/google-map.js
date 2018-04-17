@@ -1,11 +1,12 @@
-export class GoogleMap {
+export default class GoogleMap {
   /**
    * Generate new map
    * @param {string} id - selector id of container for map 
    * @param {[]} buttons - array of buttons obj for map
    */
   constructor(id, buttons){
-    this.map = new google.maps.Map(document.getElementById(id), {
+    const btns = buttons || [];
+    this.map = new window.google.maps.Map(document.getElementById(id), {
       zoom: 17,
       center: {lat: 49.83476128325918, lng: 24.01436448097229},
       mapTypeId: 'terrain',
@@ -16,9 +17,9 @@ export class GoogleMap {
     this.areas = [];
     this.markers = [];
 
-    buttons.array.forEach( b => this.createGoogleBtn(b));
+    btns.forEach( b => this.createGoogleBtn(b));
     
-    google.maps.event.addListener(map,'click',e => {
+    window.google.maps.event.addListener(this.map,'click',e => {
       alert(`${e.latLng.lat()}+++${e.latLng.lng()}`);
     });
   }
@@ -60,7 +61,7 @@ export class GoogleMap {
         controlUI.addEventListener('click', clickCallback);
       }
 
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push($btn);
+    this.map.controls[window.google.maps.ControlPosition.LEFT_TOP].push($btn);
   }
 
   /**
@@ -73,15 +74,15 @@ export class GoogleMap {
    * @field {float} lng  - location lng
    * @field {string} contentString - html in string for info-window
    */
-  setMarker(options){
+  setMarker(options, clicked){
     const icon = {
       url: options.icon,
-      scaledSize: new google.maps.Size(30, 30),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(15, 30)
+      scaledSize: new window.google.maps.Size(30, 30),
+      origin: new window.google.maps.Point(0, 0),
+      anchor: new window.google.maps.Point(15, 30)
     };
-    const marker = new google.maps.Marker({
-      position: new google.maps.LatLng(options.lat,options.lng),
+    const marker = new window.google.maps.Marker({
+      position: new window.google.maps.LatLng(options.lat,options.lng),
       map: this.map,
       icon: icon,
       title: options.title
@@ -89,12 +90,7 @@ export class GoogleMap {
 
     this.markers.push(marker);
 
-    marker.addListener('click',()=>{
-      const infowindow = new google.maps.InfoWindow({
-        content: options.contentString || ''
-      });
-    });
-    //infowindow.open(this.map,this);//how to use this in open method???
+    marker.addListener('click', clicked ||(() => {}));
   }
 
   /**
@@ -105,14 +101,14 @@ export class GoogleMap {
    * @field {number} radius -- in meters 
    */
   setCircle(circle){
-    const area = new google.maps.Circle({
+    const area = new window.google.maps.Circle({
       strokeColor: '#FF0000',
       strokeOpacity: 0.2,
       strokeWeight: 1,
       fillColor: '#FF8700',
       fillOpacity: 0.35,
       map: this.map,
-      center: new google.maps.LatLng(circle.lat, circle.lng),
+      center: new window.google.maps.LatLng(circle.lat, circle.lng),
       radius: circle.radius
     });
     this.areas.push(area);
@@ -122,10 +118,10 @@ export class GoogleMap {
    * Destroy all markers and circle from map
   */
   clearMap(){
-    this.areas.array.forEach( a => {
+    (this.areas.array || []).forEach( a => {
       a.setMap(null);
     });
-    this.markers.array.forEach( m => {
+    (this.markers.array || []).forEach( m => {
       m.setMap(null);
     });
     this.areas = [];
@@ -143,8 +139,8 @@ export class GoogleMap {
    * @returns {number} distance in meters
    */
   getDistance(pointA, pointB){
-    return google.maps.geometry.spherical.computeDistanceBetween(
-      new google.maps.LatLng(pointA.lat, pointA.lng), new google.maps.LatLng(pointB.lat, pointB.lng));
+    return window.google.maps.geometry.spherical.computeDistanceBetween(
+      new window.google.maps.LatLng(pointA.lat, pointA.lng), new window.google.maps.LatLng(pointB.lat, pointB.lng));
   }
 
 }

@@ -1,8 +1,9 @@
 import axios from 'axios';
+import * as config from '../../config';
 
 export const loadDevice = () => {
   return dispatch => {
-    axios.get('http://34.217.100.230/api/devices')
+    axios.get(`${config.DEVICE_URL}/devices`)
     .then((response) => {
       const devices = response.data.devices.map((d) => {
         if(d){

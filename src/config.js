@@ -1,0 +1,1 @@
+export const DEVICE_URL = 'http://54.149.231.34/api';

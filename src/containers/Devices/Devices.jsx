@@ -65,7 +65,6 @@ class Devices extends Component{
   }
 
   render(){
-    console.log('device', this.props.deviceList)
     const header = {
       number: '№',
       id: 'Device ID',

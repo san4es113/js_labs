@@ -1,0 +1,23 @@
+.Dashboard{
+  display: flex;
+  width: 100%;
+}
+.Dashboard-content{
+  color: red;
+  width: 75%;
+  background: black;
+  transition: all 0.5s linear;
+}
+.Dashboard aside{
+  width: 25%;
+  transition: all 0.5s linear;
+}
+
+.Dashboard-content.active{
+  width: 100%;
+}
+.Dashboard aside.active{
+  width:0;
+  overflow: hidden;
+}
+

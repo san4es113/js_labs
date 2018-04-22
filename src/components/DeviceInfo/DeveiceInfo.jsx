@@ -50,7 +50,7 @@ const deviceInfo=(props)=>(
       </li>
     </ul>
     <Link to={props.device.details.path}>
-      <button className="btn">
+      <button className="btn-link">
         View device history
       </button>
     </Link>

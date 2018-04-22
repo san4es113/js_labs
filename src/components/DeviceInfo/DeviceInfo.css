@@ -24,7 +24,7 @@
 .location-item{
   display: flex;
 }
-.btn{
+.btn-link{
   padding: 10px;
   margin-top: 10px;
   font-size: 18px;

@@ -10,7 +10,7 @@ class DeviceMap extends Component{
     super(props);
     this.map;
     this.state = {
-      activeDashboard: false,
+      activeDashboard: true,
       currentDevice: {
         id:'123qwesffhfl;lsglsgksnd;gidfjkdfgnkdjgsnldgkndlgksgngjk',
         status: 'connected',

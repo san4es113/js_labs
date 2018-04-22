@@ -18,7 +18,7 @@ const deviceInfo=(props)=>(
       </li>
 
       <li className="DeviceInfo-item">
-        <span>type:</span>
+        <span>status:</span>
         <span>{props.device.status}</span>
       </li>
 
@@ -51,7 +51,7 @@ const deviceInfo=(props)=>(
     </ul>
     <Link to={props.device.details.path}>
       <button className="btn">
-        Show more
+        View device history
       </button>
     </Link>
   </div>

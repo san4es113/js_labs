@@ -87,7 +87,7 @@ class Devices extends Component{
     }
     return (
       <div className = "Devices">
-        <Link to="device-map">Go To Map</Link>
+        <Link to="/device-map">Go To Map</Link>
         <h2>List of devices:</h2>
         
         <ul>

@@ -2,14 +2,13 @@ import React from 'react';
 import './TableHeader.css';
 
 const tableHeader=(props)=>{
-  const cellCount = Object.keys(props.item).length;
-  Object.keys(props.item)
+  const cellCount = Object.keys(props.item).length - 1;
   return (
     <div className="TableHeader">
       {Object.keys(props.item || {}).map(it=>{
         const header = props.item[it];
         if(typeof header !== 'object') {
-          return <div key={it} className="cell">{header}</div>
+          return <div key={it} className="cell" style={{width: 100 / cellCount + '%' }}>{header}</div>
         }
         return (
           <div key={it} className="btn-group" style={{width: 100 / cellCount + '%' }}>

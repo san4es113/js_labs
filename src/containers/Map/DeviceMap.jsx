@@ -4,75 +4,61 @@ import './DeviceMap.css';
 import GoogleMap from '../../service/google-map';
 import Dashboard from '../../components/Dashboard/Dashboard';
 import DeviceInfo from '../../components/DeviceInfo/DeveiceInfo';
+import { MOBILE_ICON } from '../../config';
 
-class DeviceMap extends Component{
-  constructor(props){
+class DeviceMap extends Component {
+  constructor(props) {
     super(props);
-    this.map;
+    this.map = null;
     this.state = {
       activeDashboard: true,
-      currentDevice: {
-        id:'123qwesffhfl;lsglsgksnd;gidfjkdfgnkdjgsnldgkndlgksgngjk',
-        status: 'connected',
-        model: 'nokia',
-        type: 'android',
-        battery: '12%',
-        signal: '-100dBm',
-        lastSync: '1524352896629',
-        location: {
-          lat:'12.3123',
-          lng:'34.124'
-        },
-        details: {
-          name: 'View details',
-          path: '/devices/Android14',
-          type: 'link'
-        } 
-      },
+      currentDevice: {},
     };
   }
-  showDevicesOnMap(){
-    this.props.deviceList.forEach(dev => {
+
+  componentDidMount() {
+    this.map = new GoogleMap('map1', []);
+    const that = this;
+    this.showDevicesOnMap();
+    setInterval(() => { // draw objects
+      that.map.clearMap();
+      that.showDevicesOnMap();
+    }, 30000);
+  }
+
+
+  onDeviceClickedHandler = (dev) => {
+    if (dev === this.state.currentDevice) {
+      this.setState(prevState => ({
+        activeDashboard: !prevState.activeDashboard,
+      }));
+      return;
+    }
+    this.setState({ currentDevice: dev });
+  }
+  showDevicesOnMap() {
+    this.props.deviceList.forEach((dev) => {
       this.map.setMarker({
         title: dev.model,
-        lat: dev.location.lat, 
+        lat: dev.location.lat,
         lng: dev.location.lng,
-        icon: 'http://icons.iconarchive.com/icons/graphicloads/100-flat-2/256/mobile-2-icon.png',
+        icon: MOBILE_ICON,
       }, () => this.onDeviceClickedHandler(dev));
     });
   }
-  onDeviceClickedHandler = (dev) =>{
-    this.setState((prevState)=>{
-      return {
-        activeDashboard: !prevState.activeDashboard
-      }
-    })
-  }
-  render(){
-    const asideWindow = <DeviceInfo device={this.state.currentDevice}/>
+  render() {
+    const asideWindow = this.state.currentDevice.id ? <DeviceInfo device={this.state.currentDevice} /> : null;
     return (
-      <Dashboard 
-        toggled={this.state.activeDashboard?"active":"hidden"}
-        asideWindow={asideWindow}>
-        <button onClick={this.onDeviceClickedHandler}>aaa</button>
-        <div className = "DeviceMap" id="map1"/>
-      </Dashboard>  
+      <Dashboard
+        toggled={this.state.activeDashboard ? 'active' : 'hidden'}
+        asideWindow={asideWindow}
+      >
+        <div className="DeviceMap" id="map1" />
+      </Dashboard>
     );
   }
-  componentDidMount(){
-    // this.map = new GoogleMap('map1',[]);
-    // const that = this;
-    // that.showDevicesOnMap();
-    // setInterval(() => {//draw objects
-    //   that.map.clearMap();
-    //   that.showDevicesOnMap();
-    // }, 30000);
-    
-  }
 }
-const mapStateToProps = (state) => {
-  return{
-    deviceList: state.devices.deviceList
-  }
-}
+const mapStateToProps = state => ({
+  deviceList: state.devices.deviceList,
+});
 export default connect(mapStateToProps)(DeviceMap);

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import './App.css';
 import Layout from '../containers/Layout/Layout';
 import { routes } from './app-routes';
@@ -10,7 +9,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Layout>
-         {routes}
+          {routes}
         </Layout>
       </BrowserRouter>
     );

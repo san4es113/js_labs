@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './Layout.css';
 import { Link } from 'react-router-dom';
+import * as config from '../../config';
+import './Layout.css';
 
 class Layout extends Component {
   constructor(props) {
@@ -8,7 +9,19 @@ class Layout extends Component {
     this.state = {
     };
   }
-
+  onSettingsClickHandler = () => {
+    const result = prompt('Enter new IP:');
+    if (result) {
+      if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(result)) {
+        config.setIP(result);
+      } else {
+        alert('wrong IP format');
+        this.onSettingsClickHandler();
+      }
+    } else {
+      alert('IP is empty');
+    }
+  }
   render() {
     return (
       <div className="Layout">
@@ -16,7 +29,7 @@ class Layout extends Component {
           <ul>
             <li><Link to="/devices">Home</Link></li>
             <li><Link to="/device-map">Device Map</Link></li>
-            <li><Link to="/devices">Settings</Link></li>
+            <li><a href="#" onClick={this.onSettingsClickHandler}>Settings</a></li>
           </ul>
         </header>
         <div className="header-bottom">

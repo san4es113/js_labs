@@ -6,7 +6,6 @@ import './Devices.css';
 import TableItem from '../../components/TableItem/Table';
 import TableHeader from '../../components/TableHeader/TableHeader';
 import { displayByType, displayByStatus, displayByLastSync } from '../../service/devices';
-import { loadDevice } from '../../store/actions/devices';
 
 class Devices extends Component {
   constructor(props) {
@@ -19,16 +18,17 @@ class Devices extends Component {
 
   componentDidMount() {
     const that = this;
-    that.props.loadDevice();
     setTimeout(() => {
       that.onDeviceTypeItemClickHandler('all');
     }, 2000);
     this.timer = setInterval(() => {
-      that.props.loadDevice();
       if (that.state.isAllActive) {
         that.onDeviceTypeItemClickHandler('all');
       }
     }, 15000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   onDeviceTypeItemClickHandler = (name) => {
@@ -74,7 +74,7 @@ class Devices extends Component {
     const devices = displayByLastSync(this.props.deviceList, lastTime);
     this.setState({
       devices,
-      isAllActive: true,
+      isAllActive: false,
     });
   }
 
@@ -133,8 +133,4 @@ class Devices extends Component {
 const mapStateToProps = state => ({
   deviceList: state.devices.deviceList,
 });
-
-const mapDispatchToProps = dispatch => ({
-  loadDevice: () => dispatch(loadDevice()),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(Devices);
+export default connect(mapStateToProps)(Devices);

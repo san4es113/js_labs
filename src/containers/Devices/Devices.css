@@ -1,6 +1,6 @@
 .Devices{
   width: 100%;
-  padding: 0 2%;
+  padding: 40px 2% 0;
 }
 .Devices ul li:nth-child(2n){
   background:rgba(237, 239, 239, 0.55);
@@ -11,4 +11,13 @@
 .table-header{
   background: #66339991!important;
   border-radius: 10px 10px 0 0;
+}
+.Devices a{
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.Devices a:hover{
+  text-decoration: none;
 }

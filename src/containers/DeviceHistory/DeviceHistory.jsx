@@ -19,6 +19,9 @@ class DeviceHistory extends Component {
     };
   }
   render() {
+    const currentDevice = this.props.deviceList.filter(d => d.id === this.state.currentDeviceId)[0];
+    if (!currentDevice) return <Redirect to="/devices" />;
+
     const header = {
       number: '№',
       timeStamp: {
@@ -29,11 +32,18 @@ class DeviceHistory extends Component {
       battery: 'battery',
       signal: 'signal',
     };
-    const currentDevice = this.props.deviceList.filter(d => d.id === this.state.currentDeviceId)[0];
-    if (!currentDevice) return <Redirect to="/devices" />;
+    console.log(currentDevice);
     return (
       <MuiThemeProvider>
         <div className="DeviceHistory">
+          <ul>
+            <li><h4>{currentDevice.model}</h4></li>
+            <li><h4>type:{currentDevice.type}</h4></li>
+            <li><h4>status:{currentDevice.status}</h4></li>
+            <li>
+              <Link to={`/devices/${this.state.currentDeviceId}/map`} >Go to map history</Link>
+            </li>
+          </ul>
           <div className="datetime-section">
             <DateTimePicker
               floatingLabelText="Start time"
@@ -76,9 +86,6 @@ class DeviceHistory extends Component {
           })
         }
           </ul>
-          <Link to={`/devices/${this.state.currentDeviceId}/map`} >
-              Go to map history
-          </Link>
         </div>
       </MuiThemeProvider>
     );

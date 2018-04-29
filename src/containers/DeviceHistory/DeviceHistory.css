@@ -1,7 +1,14 @@
 .DeviceHistory{
   width: 100%;
+  padding-top: 40px;
 }
 .datetime-section{
   display: flex;
   justify-content: center;
+}
+.DeviceHistory a{
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
 }

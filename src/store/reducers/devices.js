@@ -19,7 +19,7 @@ const initialState = {
       },
       history: [
         {
-          time: '15243528456629',
+          time: '1525042197545',
           location: {
             lat: '15.3123',
             lng: '24.124',
@@ -28,7 +28,7 @@ const initialState = {
           battery: '31%',
         },
         {
-          time: '1524352877629',
+          time: '1525032000995',
           location: {
             lat: '12.3123',
             lng: '34.124',

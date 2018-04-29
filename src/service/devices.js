@@ -7,4 +7,4 @@ export const displayByStatus = (arr, status) => arr.filter(device => device.stat
  * @param {number} lastSync -- absolute time in msec
  * @returns {[]} array of devices
  */
-export const displayByLastSync = (arr, lastSync) => arr.filter(device => device.lastSync >= lastSync);
+export const displayByLastSync = (arr, lastSync) => arr.filter(device => (device.lastSync || device.time) >= lastSync);

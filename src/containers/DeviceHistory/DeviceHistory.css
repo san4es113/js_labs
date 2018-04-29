@@ -1,3 +1,7 @@
 .DeviceHistory{
   width: 100%;
 }
+.datetime-section{
+  display: flex;
+  justify-content: center;
+}

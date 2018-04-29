@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import './DeviceInfo.css';
 import { Link } from 'react-router-dom';
+import './DeviceInfo.css';
 
-const deviceInfo=(props)=>(
+const deviceInfo = props => (
   <div className="DeviceInfo">
     <h1>{props.device.model}</h1>
     <ul>

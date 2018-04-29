@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 import moment from 'moment';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import DateTimePicker from 'material-ui-datetimepicker';
@@ -11,6 +12,12 @@ import TableItem from '../../components/TableItem/Table';
 import './DeviceHistory.css';
 
 class DeviceHistory extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentDeviceId: this.props.match.params.id,
+    };
+  }
   render() {
     const header = {
       number: '№',
@@ -22,6 +29,8 @@ class DeviceHistory extends Component {
       battery: 'battery',
       signal: 'signal',
     };
+    const currentDevice = this.props.deviceList.filter(d => d.id === this.state.currentDeviceId)[0];
+    if (!currentDevice) return <Redirect to="/devices" />;
     return (
       <MuiThemeProvider>
         <div className="DeviceHistory">
@@ -50,22 +59,26 @@ class DeviceHistory extends Component {
             </li>
 
             {
-          this.props.deviceList[0].history.map((entry, index) => {
+          this.props.deviceList.filter(d => d.id === this.state.currentDeviceId)[0].history.map((entry, index) => {
             if (entry) {
-              return (<li key={entry.time}>
-                <TableItem
-                  id={index + 1}
-                  item={{
-                timeStamp: moment(+entry.time).format('LLLL'),
-                battery: entry.battery,
-                signal: entry.signal,
-            }}
-                />
-                      </li>);
-          }
- })
+              return (
+                <li key={entry.time}>
+                  <TableItem
+                    id={index + 1}
+                    item={{
+                      timeStamp: moment(+entry.time).format('LLLL'),
+                      battery: entry.battery,
+                      signal: entry.signal,
+                    }}
+                  />
+                </li>);
+            }
+          })
         }
           </ul>
+          <Link to={`/devices/${this.state.currentDeviceId}/map`} >
+              Go to map history
+          </Link>
         </div>
       </MuiThemeProvider>
     );

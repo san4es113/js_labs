@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './DeviceMap.css';
+import moment from 'moment';
+import './MapHistory.css';
 import GoogleMap from '../../service/google-map';
 import Dashboard from '../../components/Dashboard/Dashboard';
 import DeviceInfo from '../../components/DeviceInfo/DeviceInfo';
 import { MOBILE_ICON } from '../../config';
 
-class DeviceMap extends Component {
+class MapHistory extends Component {
   constructor(props) {
     super(props);
     this.map = null;
     this.state = {
       activeDashboard: true,
-      currentDevice: {},
+      currentDevice: this.props.deviceList.filter((d => d.id === this.props.match.params.id))[0],
+      currentDevIndex: '',
     };
   }
 
   componentDidMount() {
-    this.map = new GoogleMap('map1', []);
+    this.map = new GoogleMap('map2', []);
     const that = this;
     this.showDevicesOnMap();
     setInterval(() => { // draw objects
@@ -27,33 +29,40 @@ class DeviceMap extends Component {
   }
 
 
-  onDeviceClickedHandler = (dev) => {
-    if (dev === this.state.currentDevice) {
+  onDeviceClickedHandler = (index) => {
+    if (index === this.state.currentDevIndex) {
       this.setState(prevState => ({
         activeDashboard: !prevState.activeDashboard,
       }));
       return;
     }
-    this.setState({ currentDevice: dev });
+    this.setState({ currentDevIndex: index });
   }
   showDevicesOnMap() {
-    this.props.deviceList.forEach((dev) => {
+    this.state.currentDevice.history.forEach((dev, index) => {
       this.map.setMarker({
-        title: dev.model,
+        title: moment(dev.time).format('LLLL'),
         lat: dev.location.lat,
         lng: dev.location.lng,
         icon: MOBILE_ICON,
-      }, () => this.onDeviceClickedHandler(dev));
+      }, () => this.onDeviceClickedHandler(index));
     });
   }
+
   render() {
-    const asideWindow = this.state.currentDevice.id ? <DeviceInfo device={this.state.currentDevice} /> : null;
+    const asideWindow = this.state.currentDevice.id
+      ? (<DeviceInfo device={{
+        ...this.state.currentDevice,
+        ...this.state.currentDevice.history[this.state.currentDevIndex],
+}}
+      />)
+      : null;
     return (
       <Dashboard
         toggled={this.state.activeDashboard ? 'active' : 'hidden'}
         asideWindow={asideWindow}
       >
-        <div className="DeviceMap" id="map1" />
+        <div className="DeviceMap" id="map2" />
       </Dashboard>
     );
   }
@@ -61,4 +70,4 @@ class DeviceMap extends Component {
 const mapStateToProps = state => ({
   deviceList: state.devices.deviceList,
 });
-export default connect(mapStateToProps)(DeviceMap);
+export default connect(mapStateToProps)(MapHistory);

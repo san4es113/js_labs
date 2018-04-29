@@ -14,7 +14,7 @@ const initialState = {
       },
       details: {
         name: 'View details',
-        path: '/devices/Android14',
+        path: '/devices/123qwesffhflsgksnd;gidfjkdfgnkdjgsnldgkndlgksgngjk',
         type: 'link',
       },
       history: [
@@ -39,8 +39,8 @@ const initialState = {
         {
           time: '1524357795629',
           location: {
-            lat: '12.3123',
-            lng: '34.124',
+            lat: '14.3123',
+            lng: '34.164',
           },
           signal: '-12dBm',
           battery: '33%',

@@ -6,20 +6,34 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import DateTimePicker from 'material-ui-datetimepicker';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog';
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
+
 import { displayByLastSync, sortByTime } from '../../service/devices';
 import TableHeader from '../../components/TableHeader/TableHeader';
 import TableItem from '../../components/TableItem/Table';
+import { loadDevicehistory } from '../../store/actions/devices';
+import * as config from '../../config';
 import './DeviceHistory.css';
 
 class DeviceHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDeviceId: this.props.match.params.id,
-      currentDevice: this.props.deviceList.filter(d => d.id === this.props.match.params.id)[0],
       start: '',
       end: '',
+      currentDevice: this.props.deviceList.filter(d => d.id === this.props.match.params.id)[0],
     };
+    this.timer = null;
+  }
+  componentDidMount() {
+    const that = this;
+    this.props.loadDevicehistory(that.props.match.params.id);
+    this.timer = setInterval(() => {
+      that.props.loadDevicehistory(that.props.match.params.id);
+    }, config.SYNC_TIME * 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    this.timer = null;
   }
 
   onDeviceLastSyncItemClickHandler = (name) => {
@@ -33,7 +47,7 @@ class DeviceHistory extends Component {
       lastTime = moment().subtract(hours, 'hour').valueOf();
     }
     const curDevice = this.props.deviceList.filter(d => d.id === this.props.match.params.id)[0];
-    const devices = displayByLastSync(curDevice.history, lastTime);
+    const devices = displayByLastSync(this.props.historyDevice.history, lastTime);
     this.setState({ currentDevice: { ...curDevice, history: devices } });
   }
 
@@ -53,10 +67,9 @@ class DeviceHistory extends Component {
 
     if (this.state.start && this.state.end) {
       const curDevice = this.props.deviceList.filter(d => d.id === this.props.match.params.id)[0];
-      const devices = sortByTime(curDevice.history, this.state.start, this.state.end);
+      const devices = sortByTime(this.props.historyDevice.history, this.state.start, this.state.end);
       this.setState({ currentDevice: { ...curDevice, history: devices } });
     }
-
   }
 
   render() {
@@ -72,6 +85,7 @@ class DeviceHistory extends Component {
       battery: 'battery',
       signal: 'signal',
     };
+    const history = this.state.currentDevice.history || this.props.historyDevice.history || [];
     return (
       <MuiThemeProvider>
         <div className="DeviceHistory">
@@ -80,7 +94,7 @@ class DeviceHistory extends Component {
             <li><h4>type:{this.state.currentDevice.type}</h4></li>
             <li><h4>status:{this.state.currentDevice.status}</h4></li>
             <li>
-              <Link to={`/devices/${this.state.currentDeviceId}/map`} >Go to map history</Link>
+              <Link to={`/devices/${this.state.currentDevice.id}/map`} >Go to map history</Link>
             </li>
           </ul>
           <div className="datetime-section">
@@ -112,21 +126,21 @@ class DeviceHistory extends Component {
             </li>
 
             {
-          this.state.currentDevice.history.map((entry, index) => {
-            if (entry) {
-              return (
-                <li key={entry.time}>
-                  <TableItem
-                    id={index + 1}
-                    item={{
-                      timeStamp: moment(+entry.time).format('LLLL'),
-                      battery: entry.battery,
-                      signal: entry.signal,
-                    }}
-                  />
-                </li>);
-            }
-          })
+              history.map((entry, index) => {
+                if (entry) {
+                  return (
+                    <li key={entry.time + index}>
+                      <TableItem
+                        id={index + 1}
+                        item={{
+                          timeStamp: moment(+entry.time).format('LLLL'),
+                          battery: entry.battery,
+                          signal: entry.signal,
+                        }}
+                      />
+                    </li>);
+                }
+            })
         }
           </ul>
         </div>
@@ -137,5 +151,9 @@ class DeviceHistory extends Component {
 
 const mapStateToProps = state => ({
   deviceList: state.devices.deviceList,
+  historyDevice: state.devices.currentDeviceHistory,
 });
-export default connect(mapStateToProps)(DeviceHistory);
+const mapDispatchToProps = dispatch => ({
+  loadDevicehistory: id => dispatch(loadDevicehistory(id)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceHistory);

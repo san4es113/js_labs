@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 import './MapHistory.css';
 import GoogleMap from '../../service/google-map';
 import Dashboard from '../../components/Dashboard/Dashboard';
 import DeviceInfo from '../../components/DeviceInfo/DeviceInfo';
-import { MOBILE_ICON } from '../../config';
+import * as config from '../../config';
 
 class MapHistory extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class MapHistory extends Component {
     setInterval(() => { // draw objects
       that.map.clearMap();
       that.showDevicesOnMap();
-    }, 30000);
+    }, config.SYNC_TIME * 1000);
   }
 
 
@@ -39,22 +40,23 @@ class MapHistory extends Component {
     this.setState({ currentDevIndex: index });
   }
   showDevicesOnMap() {
-    this.state.currentDevice.history.forEach((dev, index) => {
+    this.props.historyDevice.forEach((dev, index) => {
       this.map.setMarker({
         title: moment(dev.time).format('LLLL'),
         lat: dev.location.lat,
         lng: dev.location.lng,
-        icon: MOBILE_ICON,
+        icon: config.MOBILE_ICON,
       }, () => this.onDeviceClickedHandler(index));
     });
   }
 
   render() {
+    if (!this.state.currentDevice) return <Redirect to="/devices" />;
     const asideWindow = this.state.currentDevice.id
       ? (<DeviceInfo device={{
         ...this.state.currentDevice,
-        ...this.state.currentDevice.history[this.state.currentDevIndex],
-}}
+        ...this.props.historyDevice[this.state.currentDevIndex],
+      }}
       />)
       : null;
     return (
@@ -69,5 +71,6 @@ class MapHistory extends Component {
 }
 const mapStateToProps = state => ({
   deviceList: state.devices.deviceList,
+  historyDevice: state.devices.currentDeviceHistory.history,
 });
 export default connect(mapStateToProps)(MapHistory);

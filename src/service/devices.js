@@ -8,3 +8,10 @@ export const displayByStatus = (arr, status) => arr.filter(device => device.stat
  * @returns {[]} array of devices
  */
 export const displayByLastSync = (arr, lastSync) => arr.filter(device => (device.lastSync || device.time) >= lastSync);
+
+/**
+
+ * @returns {[]} array of devices
+ */
+export const sortByTime = (arr, start, end) => arr.filter(device => (device.lastSync || device.time) >= start
+                                                                 && (device.lastSync || device.time) <= end);

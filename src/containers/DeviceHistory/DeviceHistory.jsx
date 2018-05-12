@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import DateTimePicker from 'material-ui-datetimepicker';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog';
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
-import { displayByLastSync } from '../../service/devices';
+import { displayByLastSync, sortByTime } from '../../service/devices';
 import TableHeader from '../../components/TableHeader/TableHeader';
 import TableItem from '../../components/TableItem/Table';
 import './DeviceHistory.css';
@@ -17,6 +17,8 @@ class DeviceHistory extends Component {
     this.state = {
       currentDeviceId: this.props.match.params.id,
       currentDevice: this.props.deviceList.filter(d => d.id === this.props.match.params.id)[0],
+      start: '',
+      end: '',
     };
   }
 
@@ -33,6 +35,28 @@ class DeviceHistory extends Component {
     const curDevice = this.props.deviceList.filter(d => d.id === this.props.match.params.id)[0];
     const devices = displayByLastSync(curDevice.history, lastTime);
     this.setState({ currentDevice: { ...curDevice, history: devices } });
+  }
+
+  onTimeChangeHandler = async (id, datetime) => {
+    const time = moment(datetime).valueOf();
+
+    await this.setState(() => {
+      if (id === 'datetime-start') {
+        return {
+          start: time,
+        };
+      }
+      return {
+        end: time,
+      };
+    });
+
+    if (this.state.start && this.state.end) {
+      const curDevice = this.props.deviceList.filter(d => d.id === this.props.match.params.id)[0];
+      const devices = sortByTime(curDevice.history, this.state.start, this.state.end);
+      this.setState({ currentDevice: { ...curDevice, history: devices } });
+    }
+
   }
 
   render() {
@@ -61,16 +85,20 @@ class DeviceHistory extends Component {
           </ul>
           <div className="datetime-section">
             <DateTimePicker
+              returnMomentDate
+              id="datetime-start"
               floatingLabelText="Start time"
               format="MMM DD, YYYY HH:mm"
               timeFormat="24hr"
-              onChange={this.setDate}
+              onChange={dateTime => this.onTimeChangeHandler('datetime-start', dateTime)}
               DatePicker={DatePickerDialog}
               TimePicker={TimePickerDialog}
             />
             <DateTimePicker
+              returnMomentDate
+              id="datetime-end"
               floatingLabelText="End time"
-              onChange={this.setDate}
+              onChange={dateTime => this.onTimeChangeHandler('datetime-end', dateTime)}
               DatePicker={DatePickerDialog}
               TimePicker={TimePickerDialog}
               format="MMM DD, YYYY HH:mm"

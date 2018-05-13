@@ -9,6 +9,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-left: 150px;
 }
 
 .header-bottom{
@@ -16,18 +17,74 @@
   widows: 100%;
   height: 100vh;
 }
-header{
+.Layout > aside{
   position: absolute;
   z-index: 1;
-  background: #d4b6d4;
+  height: 100%;
+  background: #706668;
+  padding-top: 80px;
+  z-index: 1;
 }
-header ul{
+.Layout > aside ul{
   display: flex;
-  width: 270px;
-  justify-content: space-around;
+  width: 150px;
+  flex-direction: column;
 }
-header li{
-  border: 1px solid;
+.Layout > aside li{
+  border: 1px #6B5D60;
   padding: 5px;
+  height: 100px;
+  opacity: 0.7;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: #7C6E71;
+  color: white;
+}
+.Layout > aside li a {
+  color: white;
+  width: 100%;
+  height: 100%
 }
 
+.Layout > aside li a:hover,
+.Layout > aside li a:focus,
+.Layout > aside li:hover,
+.active {
+  color:black;
+  text-decoration: none;
+}
+.Layout > aside li:hover,
+.active{
+  background:#84DAD4;
+}
+
+
+.headerInfo{
+  display: flex;
+  font-size: 24px;
+  padding-left: 150px;
+  background: #84DAD4;
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/8/8e/Logo_Empresa_Nacional_de_Telecomunicaciones_-_TELECOM.png);
+  background-repeat: no-repeat;
+  background-size: 50px 50px;
+  background-position-x: 50px;
+  background-position-y: 15px;
+}
+.headerInfo li{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 37px 0 17px;
+  font-size: 20px;
+  border-right: 1px solid grey;
+  margin: 10px;
+}
+.headerInfo li span:first-child{
+  font-size: 18px;
+}
+.headerInfo li span:last-child{
+  font-size: 22px;
+  color: #fff;
+}

@@ -1,6 +1,8 @@
 .Devices{
   width: 100%;
   padding: 40px 2% 0;
+  display: flex;
+  flex-direction: column;
 }
 .Devices ul li:nth-child(2n){
   background:rgba(237, 239, 239, 0.55);
@@ -13,10 +15,19 @@
   border-radius: 10px 10px 0 0;
 }
 .Devices a{
-  border: 1px solid;
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
+}
+.Devices > a {
+  width: 160px;
+  border-radius: 5px;
+  padding: 16px 4px 16px 48px;
+  border: 1px solid #84dad4;
+  background: #57cf6e;
+  background-image: url(https://img2.androidappsapk.co/300/d/1/6/com.tntgames.pokemongocompanion.png);
+  background-size: 67px 67px;
+  background-repeat: no-repeat;
 }
 .Devices a:hover{
   text-decoration: none;

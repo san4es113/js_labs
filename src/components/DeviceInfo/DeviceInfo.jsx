@@ -7,27 +7,27 @@ const deviceInfo = props => (
   <div className="DeviceInfo">
     <h1>{props.device.model}</h1>
     <ul>
-      <li className="DeviceInfo-item">
+      <li className="DeviceInfo-item DeviceInfo-id">
         <span>id:</span>
         <span>{props.device.id}</span>
       </li>
 
-      <li className="DeviceInfo-item">
+      <li className="DeviceInfo-item DeviceInfo-type">
         <span>type:</span>
         <span>{props.device.type}</span>
       </li>
 
-      <li className="DeviceInfo-item">
+      <li className="DeviceInfo-item DeviceInfo-status">
         <span>status:</span>
         <span>{props.device.status}</span>
       </li>
 
-      <li className="DeviceInfo-item">
+      <li className="DeviceInfo-item DeviceInfo-lastSync">
         <span>lastSync:</span>
         <span>{moment(+props.device.lastSync).fromNow()}</span>
       </li>
 
-      <li className="DeviceInfo-item">
+      <li className="DeviceInfo-item DeviceInfo-signal">
         <span>Signal:</span>
         <span>{props.device.signal}</span>
       </li>

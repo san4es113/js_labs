@@ -112,15 +112,17 @@ var app = {
   };
   function saveIP(){
     var $ip = document.getElementById('ip-input');
+    var $status = document.getElementById('status');
     if($ip.value){
       serverEndpoint = $ip.value.trim();
       $ip.value = "";
     }
+    $status.innerText = "Try connect to server ...";
   }
   function toggle(){
     var $status = document.getElementById('status');
     if(arguments.length){
-      $status.innerText = arguments[0] ? ("Connected " + serverEndpoint) : "Disconnected";
+      $status.innerText = arguments[0] === "connected" ? ("Connected " + serverEndpoint) : "Disconnected";
       return;
     } 
     

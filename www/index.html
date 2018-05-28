@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>Hello World</title>
+    </head>
+    <body>
+                <p id="status">Enter IP</p>
+                <p><button onclick="toggle()">Toggle</button></p>
+                <br>
+                <p><span>imei:</span><span id="span-imei"></span></p>
+                <p><span>battery:</span><span id="span-battery"></span></p>
+                <p><span>signal:</span><span id="span-signal"></span></p>
+                <p>Location</p>
+                <p><span>lng: </span><span id="span-lng"></span></p>
+                <p><span>lat: </span><span id="span-lat"></span></p>
+                <p><span>height: </span><span id="span-height"></span></p>
+                <input type="text" id="ip-input" placeholder="enter endpoint">
+                <button onclick="saveIP()">Confirm</button>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>

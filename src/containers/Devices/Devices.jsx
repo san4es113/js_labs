@@ -6,6 +6,8 @@ import './Devices.css';
 import TableItem from '../../components/TableItem/Table';
 import TableHeader from '../../components/TableHeader/TableHeader';
 import { displayByType, displayByStatus, displayByLastSync } from '../../service/devices';
+import { loadDevice } from '../../store/actions/devices';
+import * as config from '../../config';
 
 class Devices extends Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class Devices extends Component {
       if (that.state.isAllActive) {
         that.onDeviceTypeItemClickHandler('all');
       }
-    }, 15000);
+    }, config.SYNC_TIME * 1000);
   }
   componentWillUnmount() {
     clearInterval(this.timer);
@@ -101,7 +103,7 @@ class Devices extends Component {
     };
     return (
       <div className="Devices">
-        <Link to="/device-map">Go To Map</Link>
+        <Link to="/device-map" onClick={this.props.loadDevice}>Go To Map</Link>
         <h2>List of devices:</h2>
 
         <ul>
@@ -120,6 +122,7 @@ class Devices extends Component {
                   lastSync: device.lastSync,
                   details: device.details,
                 }}
+                clicked={this.props.loadDevice}
               />
             </li>);
               }
@@ -130,7 +133,11 @@ class Devices extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  loadDevice: () => dispatch(loadDevice()),
+});
+
 const mapStateToProps = state => ({
   deviceList: state.devices.deviceList,
 });
-export default connect(mapStateToProps)(Devices);
+export default connect(mapStateToProps, mapDispatchToProps)(Devices);

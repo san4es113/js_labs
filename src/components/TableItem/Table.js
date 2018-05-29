@@ -23,7 +23,7 @@ const table = (props) => {
               className="cell-container"
               style={{ width: `${100 / countCells}%` }}
             >
-              <Link to={cell.path}>{cell.name}</Link>
+              <Link to={cell.path} onClick={props.clicked || null}>{cell.name}</Link>
             </div>);
         }
       }

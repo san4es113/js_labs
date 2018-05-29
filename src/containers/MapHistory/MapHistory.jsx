@@ -17,16 +17,21 @@ class MapHistory extends Component {
       currentDevice: this.props.deviceList.filter((d => d.id === this.props.match.params.id))[0],
       currentDevIndex: '',
     };
+    this.timer = null;
   }
 
   componentDidMount() {
     this.map = new GoogleMap('map2', []);
     const that = this;
     this.showDevicesOnMap();
-    setInterval(() => { // draw objects
+    this.timer = setInterval(() => { // draw objects
       that.map.clearMap();
       that.showDevicesOnMap();
     }, config.SYNC_TIME * 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    this.timer = null;
   }
 
 

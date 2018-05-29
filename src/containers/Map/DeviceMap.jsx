@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import './DeviceMap.css';
 import GoogleMap from '../../service/google-map';
 import Dashboard from '../../components/Dashboard/Dashboard';
 import DeviceInfo from '../../components/DeviceInfo/DeviceInfo';
-import { MOBILE_ICON } from '../../config';
+import { MOBILE_ICON, SYNC_TIME } from '../../config';
 
 class DeviceMap extends Component {
   constructor(props) {
@@ -14,16 +15,22 @@ class DeviceMap extends Component {
       activeDashboard: true,
       currentDevice: {},
     };
+    this.timer = null;
   }
 
   componentDidMount() {
     this.map = new GoogleMap('map1', []);
     const that = this;
     this.showDevicesOnMap();
-    setInterval(() => { // draw objects
+    this.timer = setInterval(() => { // draw objects
       that.map.clearMap();
       that.showDevicesOnMap();
-    }, 30000);
+    }, SYNC_TIME * 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    this.timer = null;
   }
 
 
@@ -61,4 +68,5 @@ class DeviceMap extends Component {
 const mapStateToProps = state => ({
   deviceList: state.devices.deviceList,
 });
+
 export default connect(mapStateToProps)(DeviceMap);

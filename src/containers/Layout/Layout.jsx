@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import SettingsIcon from 'react-icons/lib/go/settings';
 import HomeIcon from 'react-icons/lib/go/home';
 import MapIcon from 'react-icons/lib/md/map';
+import { loadDevice } from '../../store/actions/devices';
 
 import * as config from '../../config';
 import './Layout.css';
@@ -29,15 +31,15 @@ class Layout extends Component {
     };
     return (
       <div className="Layout">
-        <div style={{ 'z-index': '2' }}>
+        <div style={{ zIndex: '2' }}>
           <ul className="headerInfo">
             <li>
               <span>Devices</span>
-              <span>20</span>
+              <span>{this.props.deviceList.length || 0}</span>
             </li>
             <li>
               <span>Connected</span>
-              <span>20</span>
+              <span>{this.props.deviceList.filter(d => d.status === 'connected').length}</span>
             </li>
           </ul>
         </div>
@@ -45,7 +47,7 @@ class Layout extends Component {
 
           <ul>
             <li>
-              <Link to="/devices">
+              <Link to="/devices" onClick={this.props.loadDevice}>
                 <HomeIcon
                   size={30}
                   style={iconStyle}
@@ -54,7 +56,7 @@ class Layout extends Component {
               </Link>
             </li>
             <li>
-              <Link to="/device-map">
+              <Link to="/device-map" onClick={this.props.loadDevice}>
                 <MapIcon size={30} style={iconStyle} />
                 Device Map
               </Link>
@@ -74,6 +76,10 @@ class Layout extends Component {
     );
   }
 }
-
-
-export default Layout;
+const mapStateToProps = state => ({
+  deviceList: state.devices.deviceList,
+});
+const mapDispatchToProps = dispatch => ({
+  loadDevice: () => dispatch(loadDevice()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

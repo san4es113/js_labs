@@ -12,3 +12,14 @@
   border-radius: 5px;
   cursor: pointer;
 }
+.generalInfo{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.generalInfo-item{
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+}

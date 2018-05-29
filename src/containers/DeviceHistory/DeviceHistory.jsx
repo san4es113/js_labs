@@ -10,7 +10,7 @@ import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
 import { displayByLastSync, sortByTime } from '../../service/devices';
 import TableHeader from '../../components/TableHeader/TableHeader';
 import TableItem from '../../components/TableItem/Table';
-import { loadDevicehistory } from '../../store/actions/devices';
+import { loadDevicehistory, loadDevice } from '../../store/actions/devices';
 import * as config from '../../config';
 import './DeviceHistory.css';
 
@@ -89,12 +89,27 @@ class DeviceHistory extends Component {
     return (
       <MuiThemeProvider>
         <div className="DeviceHistory">
-          <ul>
-            <li><h4>{this.state.currentDevice.model}</h4></li>
-            <li><h4>type:{this.state.currentDevice.type}</h4></li>
-            <li><h4>status:{this.state.currentDevice.status}</h4></li>
+          <ul className="generalInfo">
+            <li><h4 className="generalInfo-item">{this.state.currentDevice.model}</h4></li>
             <li>
-              <Link to={`/devices/${this.state.currentDevice.id}/map`} >Go to map history</Link>
+              <h4 className="generalInfo-item">
+                <span>type:</span>
+                <span>{this.state.currentDevice.type}</span>
+              </h4>
+            </li>
+            <li>
+              <h4 className="generalInfo-item">
+                <span>status:</span>
+                <span>{this.state.currentDevice.status}</span>
+              </h4>
+            </li>
+            <li>
+              <Link
+                to={`/devices/${this.state.currentDevice.id}/map`}
+                onClick={this.props.loadDevice}
+              >
+                Go to map history
+              </Link>
             </li>
           </ul>
           <div className="datetime-section">
@@ -129,7 +144,7 @@ class DeviceHistory extends Component {
               history.map((entry, index) => {
                 if (entry) {
                   return (
-                    <li key={entry.time + index}>
+                    <li key={entry.time}>
                       <TableItem
                         id={index + 1}
                         item={{
@@ -155,5 +170,6 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   loadDevicehistory: id => dispatch(loadDevicehistory(id)),
+  loadDevice: () => dispatch(loadDevice()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(DeviceHistory);

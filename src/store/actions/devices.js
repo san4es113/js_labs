@@ -39,3 +39,4 @@ export const loadDevicehistory = id => (dispatch) => {
       dispatch(saveDeviceHistoryToStore(id, response.data));
     });
 };
+

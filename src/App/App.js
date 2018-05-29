@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import ReactInterval from 'react-interval';
 import { routes } from './app-routes';
 
 import { loadDevice } from '../store/actions/devices';
@@ -12,9 +13,6 @@ class App extends Component {
   componentDidMount() {
     const that = this;
     that.props.loadDevice();
-    this.timer = setInterval(() => {
-      that.props.loadDevice();
-    }, config.SYNC_TIME * 1000);
   }
   componentWillUnmount() {
     clearInterval(this.timer);
@@ -24,6 +22,11 @@ class App extends Component {
       <BrowserRouter>
         <Layout>
           {routes}
+          <ReactInterval
+            timeout={config.SYNC_TIME * 1000}
+            enabled
+            callback={() => this.props.loadDevice()}
+          />
         </Layout>
       </BrowserRouter>
     );

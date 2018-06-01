@@ -148,7 +148,7 @@ class DeviceHistory extends Component {
                       <TableItem
                         id={index + 1}
                         item={{
-                          timeStamp: moment(+entry.time).format('LLLL'),
+                          timeStamp: moment(+entry.lastSync).format('lll'),
                           battery: entry.battery,
                           signal: entry.signal,
                         }}

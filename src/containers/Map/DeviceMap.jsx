@@ -45,12 +45,18 @@ class DeviceMap extends Component {
   }
   showDevicesOnMap() {
     this.props.deviceList.forEach((dev) => {
-      this.map.setMarker({
-        title: dev.model,
-        lat: dev.location.lat,
-        lng: dev.location.lng,
-        icon: MOBILE_ICON,
-      }, () => this.onDeviceClickedHandler(dev));
+      console.log(dev)
+     // if (dev.location) {
+       setTimeout(()=>{
+        this.map.setMarker({
+          title: dev.model,
+          lat: dev.location.lat,
+          lng: dev.location.lng,
+          icon: MOBILE_ICON,
+        }, () => this.onDeviceClickedHandler(dev));
+       },1000)
+        
+     // }
     });
   }
   render() {

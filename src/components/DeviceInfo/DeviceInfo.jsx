@@ -41,11 +41,11 @@ const deviceInfo = props => (
         <div>Location:</div>
         <div className="location-item">
           <span>Lat:</span>
-          <span>{props.device.location.lat}</span>
+          <span>{props.device.location && props.device.location.lat ? props.device.location.lat: ''}</span>
         </div>
         <div className="location-item">
           <span>Lng:</span>
-          <span>{props.device.location.lng}</span>
+          <span>{props.device.location&& props.device.location.lng ? props.device.location.lng : ''}</span>
         </div>
       </li>
     </ul>

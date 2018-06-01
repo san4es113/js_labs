@@ -39,7 +39,7 @@ class Layout extends Component {
             </li>
             <li>
               <span>Connected</span>
-              <span>{this.props.deviceList.filter(d => d.status === 'connected').length}</span>
+              <span>{this.props.deviceList.length ? this.props.deviceList.filter(d => d.status === 'connected').length : 0}</span>
             </li>
           </ul>
         </div>

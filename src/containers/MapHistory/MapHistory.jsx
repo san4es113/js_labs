@@ -14,15 +14,18 @@ class MapHistory extends Component {
     this.map = null;
     this.state = {
       activeDashboard: true,
-      currentDevice: this.props.deviceList.filter((d => d.id === this.props.match.params.id))[0],
+      currentDevice: {},
       currentDevIndex: '',
     };
     this.timer = null;
+  }
+  componentWillMount() {
   }
 
   componentDidMount() {
     this.map = new GoogleMap('map2', []);
     const that = this;
+
     this.showDevicesOnMap();
     this.timer = setInterval(() => { // draw objects
       that.map.clearMap();
@@ -56,12 +59,15 @@ class MapHistory extends Component {
   }
 
   render() {
-    if (!this.state.currentDevice) return <Redirect to="/devices" />;
-    const asideWindow = this.state.currentDevice.id
-      ? (<DeviceInfo device={{
-        ...this.state.currentDevice,
+    const currentDevice = this.props.deviceList.length ? this.props.deviceList.filter((d => d.id === this.props.match.params.id))[0] : {};
+    const asideWindow = currentDevice.id
+      ? (<DeviceInfo
+        device={{
+        ...currentDevice,
         ...this.props.historyDevice[this.state.currentDevIndex],
-      }}
+      }
+    }
+        ViewHistroryLink={() => {}}
       />)
       : null;
     return (

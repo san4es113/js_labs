@@ -5,6 +5,7 @@ import './DeviceInfo.css';
 
 const deviceInfo = props => (
   <div className="DeviceInfo">
+  asd
     <h1>{props.device.model}</h1>
     <ul>
       <li className="DeviceInfo-item DeviceInfo-id">
@@ -41,16 +42,16 @@ const deviceInfo = props => (
         <div>Location:</div>
         <div className="location-item">
           <span>Lat:</span>
-          <span>{props.device.location && props.device.location.lat ? props.device.location.lat: ''}</span>
+          <span>{props.device.location && props.device.location.lat ? props.device.location.lat : ''}</span>
         </div>
         <div className="location-item">
           <span>Lng:</span>
-          <span>{props.device.location&& props.device.location.lng ? props.device.location.lng : ''}</span>
+          <span>{props.device.location && props.device.location.lng ? props.device.location.lng : ''}</span>
         </div>
       </li>
     </ul>
     <Link to={props.device.details.path}>
-      <button className="btn-link">
+      <button className="btn-link" onClick={props.ViewHistroryLink ? props.ViewHistroryLink : () => {}}>
         View device history
       </button>
     </Link>

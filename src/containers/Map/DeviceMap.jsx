@@ -5,7 +5,8 @@ import './DeviceMap.css';
 import GoogleMap from '../../service/google-map';
 import Dashboard from '../../components/Dashboard/Dashboard';
 import DeviceInfo from '../../components/DeviceInfo/DeviceInfo';
-import { MOBILE_ICON, SYNC_TIME } from '../../config';
+import { loadDevice } from '../../store/actions/devices';
+import { MOBILE_ICON } from '../../config';
 
 class DeviceMap extends Component {
   constructor(props) {
@@ -15,24 +16,19 @@ class DeviceMap extends Component {
       activeDashboard: true,
       currentDevice: {},
     };
-    this.timer = null;
   }
 
   componentDidMount() {
     this.map = new GoogleMap('map1', []);
-    const that = this;
-    this.showDevicesOnMap();
-    this.timer = setInterval(() => { // draw objects
-      that.map.clearMap();
-      that.showDevicesOnMap();
-    }, SYNC_TIME * 1000);
   }
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-    this.timer = null;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.deviceList.length) {
+      setTimeout(() => {
+        this.showDevicesOnMap(nextProps.deviceList);
+      }, 2000);
+    }
   }
-
 
   onDeviceClickedHandler = (dev) => {
     if (dev === this.state.currentDevice) {
@@ -43,24 +39,21 @@ class DeviceMap extends Component {
     }
     this.setState({ currentDevice: dev });
   }
-  showDevicesOnMap() {
-    this.props.deviceList.forEach((dev) => {
-      console.log(dev)
-     // if (dev.location) {
-       setTimeout(()=>{
-        this.map.setMarker({
+  showDevicesOnMap(devices) {
+    devices.forEach((dev) => {
+      const that = this;
+      if (dev.location) {
+        that.map.setMarker({
           title: dev.model,
           lat: dev.location.lat,
           lng: dev.location.lng,
           icon: MOBILE_ICON,
-        }, () => this.onDeviceClickedHandler(dev));
-       },1000)
-        
-     // }
+        }, () => that.onDeviceClickedHandler(dev));
+      }
     });
   }
   render() {
-    const asideWindow = this.state.currentDevice.id ? <DeviceInfo device={this.state.currentDevice} /> : null;
+    const asideWindow = this.state.currentDevice.id ? <DeviceInfo device={this.state.currentDevice} ViewHistroryLink={this.props.loadDevice} /> : null;
     return (
       <Dashboard
         toggled={this.state.activeDashboard ? 'active' : 'hidden'}
@@ -75,4 +68,8 @@ const mapStateToProps = state => ({
   deviceList: state.devices.deviceList,
 });
 
-export default connect(mapStateToProps)(DeviceMap);
+const mapDispatchToProps = dispatch => ({
+  loadDevice: () => dispatch(loadDevice()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceMap);

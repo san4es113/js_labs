@@ -139,8 +139,9 @@ class DeviceHistory extends Component {
             <li className="table-header">
               <TableHeader item={header} />
             </li>
-
-            {
+            <li>
+              <ul style={{ overflow: 'scroll', height: 'calc( 100vh - 240px)' }}>
+                {
               history.map((entry, index) => {
                 if (entry) {
                   return (
@@ -155,8 +156,10 @@ class DeviceHistory extends Component {
                       />
                     </li>);
                 }
-            })
-        }
+              })
+            }
+              </ul>
+            </li>
           </ul>
         </div>
       </MuiThemeProvider>

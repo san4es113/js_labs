@@ -25,7 +25,8 @@
     "react/no-unused-state":"warn",
     "import/prefer-default-export": "warn",
     "react/jsx-filename-extension": "off",
-    "react/prefer-stateless-function": "warn"
+    "react/prefer-stateless-function": "warn",
+    "no-unused-expressions":"warn"
   },
   "plugins": [
     "react"

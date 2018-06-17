@@ -12,6 +12,9 @@ const saveDeviceHistoryToStore = (id, history) => ({
     history,
   },
 });
+const activateSpinner = () => ({
+  type: 'ACTIVATE_SPINNER',
+});
 
 export const loadDevicehistory = id => (dispatch) => {
   axios.get(`${config.DEVICE_URL}/history/get/id/${id}`)
@@ -21,10 +24,10 @@ export const loadDevicehistory = id => (dispatch) => {
 };
 
 export const loadDevice = () => (dispatch) => {
+  dispatch(activateSpinner());
   axios.get(`${config.DEVICE_URL}/devices`)
     .then((response) => {
       const devices = response.data.map((d) => {
-        console.log(d);
         if (Object.keys(d).length) {
           const device = {
             ...d,
@@ -33,14 +36,15 @@ export const loadDevice = () => (dispatch) => {
               name: 'View details',
               path: `/devices/${d.id}`,
               type: 'link',
-            }
+            },
           };
           axios.get(`${config.DEVICE_URL}/history/get/id/${d.id}`)
             .then((res) => {
-              device.status = res.data[0].status,
-              device.battery = res.data[0].battery,
-              device.location = { ...res.data[0].location };
-              device.signal = res.data[0].signal;
+              const index = res.data.length - 1;
+              device.status = res.data[index].status;
+              device.battery = res.data[index].battery;
+              device.location = { ...res.data[index].location };
+              device.signal = res.data[index].signal;
             });
           return device;
         }

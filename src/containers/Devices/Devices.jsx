@@ -110,23 +110,28 @@ class Devices extends Component {
           <li className="table-header">
             <TableHeader item={header} />
           </li>
-          {this.state.devices.map((device, index) => {
-            if (device) {
-            return (<li key={device.id}>
-              <TableItem
-                id={index + 1}
-                item={{
-                  id: device.id,
-                  type: device.type,
-                  status: device.status,
-                  lastSync: device.lastSync,
-                  details: device.details,
-                }}
-                clicked={this.props.loadDevice}
-              />
-            </li>);
-              }
-          })}
+          <li>
+            <ul style={{ overflow: 'scroll', height: 'calc( 100vh - 240px)' }}>
+              {this.state.devices.length ? this.state.devices.map((device, index) => {
+                if (device) {
+                return (<li key={device.id}>
+                  <TableItem
+                    id={index + 1}
+                    item={{
+                      id: device.id,
+                      type: device.type,
+                      status: device.status,
+                      lastSync: device.lastSync,
+                      details: device.details,
+                    }}
+                    clicked={this.props.loadDevice}
+                  />
+                </li>);
+                  }
+              })
+            : null}
+            </ul>
+          </li>
         </ul>
       </div>
     );

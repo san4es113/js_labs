@@ -7,12 +7,12 @@ import { routes } from './app-routes';
 import { loadDevice } from '../store/actions/devices';
 import Layout from '../containers/Layout/Layout';
 import * as config from '../config';
+import Spinner from '../components/Spinner/Spinner';
 import './App.css';
 
 class App extends Component {
   componentDidMount() {
-    const that = this;
-    that.props.loadDevice();
+    this.props.loadDevice();
   }
   componentWillUnmount() {
     clearInterval(this.timer);
@@ -27,6 +27,7 @@ class App extends Component {
             enabled
             callback={() => this.props.loadDevice()}
           />
+          <Spinner show={this.props.isSpinnerActive} />
         </Layout>
       </BrowserRouter>
     );
@@ -35,4 +36,7 @@ class App extends Component {
 const mapDispatchToProps = dispatch => ({
   loadDevice: () => dispatch(loadDevice()),
 });
-export default connect(null, mapDispatchToProps)(App);
+const mapStateToProps = state => ({
+  isSpinnerActive: state.devices.isSpinnerActive,
+});
+export default connect(mapStateToProps, mapDispatchToProps)(App);
